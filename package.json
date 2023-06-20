@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch server.ts",
-    "prod": "cross-env NODE_ENV=production tsx watch server.ts"
+    "prod": "cross-env NODE_ENV=production tsx watch server.ts",
+    "agora": "tsx dev-data/data/importDevData.ts"
   },
   "keywords": [],
   "author": "",
