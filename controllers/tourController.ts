@@ -114,7 +114,7 @@ export const getTour = async (req: Request, res: Response) => {
     const tour = await Tour.findById(req.params.id);
     res.status(200).json({
       status: 'sucess',
-      id: req.params.id,
+      // id: req.params.id,
       data: { tour },
     });
   } catch (error) {

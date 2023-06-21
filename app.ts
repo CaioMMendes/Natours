@@ -3,10 +3,16 @@ import morgan from 'morgan';
 import tourRoutes from './routes/tourRoutes';
 import userRoutes from './routes/userRoutes';
 import dotenv from 'dotenv';
+import AppError from './utils/appError';
+import globalErrorHandler from './controllers/errorController';
 // const tourRoutes = require('./routes/tourRoutes');
 // const userRoutes = require('./routes/userRoutes');
 interface RequestWithTime extends Request {
   requestTime: any;
+}
+interface Err extends Error {
+  status?: string;
+  statusCode?: number;
 }
 
 dotenv.config({ path: './config.env' });
@@ -38,6 +44,18 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use('/api/v1/tours', tourRoutes);
 
 app.use('/api/v1/users', userRoutes);
+
+app.all('*', (req: Request, res: Response, next: NextFunction) => {
+  //o err.message pega o valor que esta dentro do parenteses do Error
+  // const err: Err = new Error(`Can't find ${req.originalUrl} on this server`);
+  // err.status = 'fail';
+  // err.statusCode = 404;
+  // next(err);
+
+  next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
+});
+
+app.use(globalErrorHandler);
 
 //Server
 // export default app;
