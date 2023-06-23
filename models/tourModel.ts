@@ -1,7 +1,5 @@
-import { NextFunction } from 'express';
-import mongoose, { FilterQuery, Query } from 'mongoose';
+import mongoose, { Query } from 'mongoose';
 import slugify from 'slugify';
-import validator from 'validator';
 
 interface Tour {
   name: string;

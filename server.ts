@@ -3,7 +3,11 @@
 
 import { app } from './app';
 import mongoose from 'mongoose';
-
+//tem que colocar antes de tudo porque se não ele não pega as coisas
+process.on('uncaughtException', (err: Error) => {
+  console.log('UNCAUGHT EXCEPTION 💥');
+  console.log(err.name, err.message);
+});
 let DB: string;
 
 if (process.env.DATABASE && process.env.DATABASE_PASSWORD) {
@@ -29,7 +33,14 @@ async function main() {
   });
 }
 
-app.listen(process.env.PORT, () => {
-  console.log(`Running on port ${process.env.PORT}`);
+const server = app.listen(process.env.PORT, () => {
+  console.log(`Running ${process.env.NODE_ENV} on port ${process.env.PORT}`);
 });
 
+process.on('unhandledRejection', (err: Error) => {
+  console.log(err.name, err.message);
+  console.log('UNHANDLE REJECTION 💥');
+  server.close(() => {
+    process.exit(1);
+  });
+});

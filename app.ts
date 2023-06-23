@@ -7,6 +7,12 @@ import AppError from './utils/appError';
 import globalErrorHandler from './controllers/errorController';
 // const tourRoutes = require('./routes/tourRoutes');
 // const userRoutes = require('./routes/userRoutes');
+
+//tem que colocar antes de tudo porque se não ele não pega as coisas
+process.on('uncaughtException', (err: Error) => {
+  console.log('UNCAUGHT EXCEPTION 💥');
+  console.log(err.name, err.message);
+});
 interface RequestWithTime extends Request {
   requestTime: any;
 }

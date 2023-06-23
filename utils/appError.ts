@@ -12,7 +12,6 @@ class AppError extends Error {
     //garantir que tudo seja configurado corretamente antes de adicionar
     //qualquer personalização na classe filha.
     super(message);
-
     this.statusCode = statusCode;
     this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
     this.isOperational = true;
